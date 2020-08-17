@@ -3,8 +3,7 @@ import Countries from './Countries';
 
 function Main(){
 	
-	const [countries, setCountries] 	  = useState([]);
-	const [defaultCntry, setDefaultCntry] = useState("Kyrgyzstan"); 
+	const [countries, setCountries] = useState([]);
 
 	let getAllCountries = async() => {
 		
@@ -17,7 +16,7 @@ function Main(){
 		} catch(err) {
 			console.log(err);
 		}
-	}
+	};
 
 	useEffect(() => {
 		getAllCountries();
