@@ -4,7 +4,7 @@ function Statistics(props){
 	console.log(props.covid.length, "props")
 	let displayStat = () => {
 		let elements = props.covid.map((stat, i) => {
-			return ( <div key={i}>
+			return ( <div style={{width:"100%", display:"flex", marginBottom:"15px", backgroundColor:"white"}} key={i}>
 						<div>
 							<h4>{stat.Date}</h4>
 						</div>
@@ -28,8 +28,7 @@ function Statistics(props){
 		return elements;
 	} 
 
-	return 	<div>
-				<h1>Hello</h1>
+	return 	<div id="mainContainer">
 				{ displayStat() }
 			</div>
 }
