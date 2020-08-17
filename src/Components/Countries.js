@@ -1,20 +1,35 @@
 import React, {useState, useEffect} from 'react';
+import Statistics from './Statistics';
 
 function Countries(props){
-
 	const [defaultCntry, setDefaultCntry] = useState("kyrgyzstan"); 
 	const [selected, setSelected]		  = useState("");
-	const [covid, setCovid]		  = useState([]);
+	const [covid, setCovid]		  		  = useState([]);
 	
+	let countryList = () => {
+		
+		let object = props.countryNames.map((name, i) => {
+			return <option val={name.Slug} key={i}>
+						{ name.Country }
+				   </option>
+		});
+
+		// if (selected == "") {
+		// 		// find default country through option list
+		// 		// add attribute selected
+		// 		let countryNames = document.querySelector("option");	
+		// };
+		return object;
+	}
 
 	let covidByCountry = async() => {
-		
 		try {
+			setCovid([]);
+			console.log(selected, "selected")
 			let search;
 			
 			if(selected == "") search = defaultCntry;
 			else search = selected;
-
 			await fetch(`https://api.covid19api.com/total/country/${search}`, {
 				"method":"GET"
 			})
@@ -32,21 +47,25 @@ function Countries(props){
 		}
 	} 
 
+	let handleChange = (e) => {
+		setSelected(e.target.value);
+	}
+
+
 	useEffect(() => {
 		covidByCountry();
 	},[]);
 
 	useEffect(() => {
-		
-	})
-
-	useEffect(() => {
-		
+		covidByCountry()
 	}, [selected]);
 
 
 	return 	<div>
-				<h1>Hello World</h1>
+				<select onChange={e => handleChange(e)}> 
+					{ countryList() } 
+				</select>
+				{ covid.length === 5 ? <Statistics covid={covid}/> : null }
 			</div>
 }
 
