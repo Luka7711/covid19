@@ -13,19 +13,12 @@ function Countries(props){
 						{ name.Country }
 				   </option>
 		});
-
-		// if (selected == "") {
-		// 		// find default country through option list
-		// 		// add attribute selected
-		// 		let countryNames = document.querySelector("option");	
-		// };
 		return object;
 	}
 
 	let covidByCountry = async() => {
 		try {
 			setCovid([]);
-			console.log(selected, "selected")
 			let search;
 			
 			if(selected == "") search = defaultCntry;
@@ -35,10 +28,11 @@ function Countries(props){
 			})
 			.then(response => response.json())
 			.then((data) => {
+				console.log(data, "data")
 				// pull up data for last 5 days
 				for(let i=1; i < 6 ; i++){
 					// it might be not a right way to save new data;
-					setCovid(oldData => [...oldData, data[data.length -1]])
+					setCovid(oldData => [...oldData, data[data.length - i]])
 				}
 			});
 
@@ -64,8 +58,11 @@ function Countries(props){
 	return 	<div>
 				<select onChange={e => handleChange(e)}> 
 					{ countryList() } 
+					<option selected>
+						Kyrgyzstan
+					</option>
 				</select>
-				{ covid.length === 5 ? <Statistics covid={covid}/> : null }
+				{ covid.length > 4 ? <Statistics covid={covid}/> : "loading" }
 			</div>
 }
 
