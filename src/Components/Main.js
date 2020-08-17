@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Countries from './Countries';
 
 function Main(){
 	
@@ -12,8 +13,7 @@ function Main(){
 					method:"GET"
 				})
 				.then(response => response.json())
-				.then(data => console.log(data, "data"));
-				
+				.then(data => setCountries(data));
 		} catch(err) {
 			console.log(err);
 		}
@@ -21,10 +21,10 @@ function Main(){
 
 	useEffect(() => {
 		getAllCountries();
-	}, [])
+	}, []);
 
 	return 	<div>
-
+				{ countries.length > 0 ? <Countries countryNames={countries}/> : null }
 	   		</div>
 }
 
